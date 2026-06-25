@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>RETRO ZONE // NEON DREAMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/press-start-2p@latest/latin-400-normal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/vt323@latest/latin-400-normal.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --green: #39ff14;
+    --green-dim: #00cc44;
+    --purple: #b026ff;
+    --purple-dim: #6a0dad;
+    --purple-dark: #2a0845;
+    --bg: #0a0015;
+    --bg-card: rgba(42, 8, 69, 0.6);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'VT323', monospace;
+    background: var(--bg);
+    color: var(--green);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    background-image:
+      linear-gradient(rgba(176, 38, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(57, 255, 20, 0.06) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .star {
+    position: absolute; width: 2px; height: 2px;
+    background: var(--green); border-radius: 50%;
+    box-shadow: 0 0 6px var(--green);
+    animation: twinkle 3s infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.12) 0px, rgba(0,0,0,0.12) 1px, transparent 1px, transparent 3px);
+    pointer-events: none; z-index: 100;
+  }
+  body::after {
+    content: ''; position: fixed; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%);
+    pointer-events: none; z-index: 99;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    background: rgba(10, 0, 21, 0.85); backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--purple);
+    box-shadow: 0 4px 30px rgba(176, 38, 255, 0.3);
+    padding: 15px 30px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .logo {
+    font-family: 'Press Start 2P', monospace; font-size: 14px;
+    color: var(--green); text-shadow: 0 0 10px var(--green); letter-spacing: 2px;
+  }
+  .logo span { color: var(--purple); text-shadow: 0 0 10px var(--purple); }
+  .nav-links { display: flex; gap: 25px; list-style: none; }
+  .nav-links a {
+    font-family: 'Press Start 2P', monospace; font-size: 10px;
+    color: var(--green-dim); text-decoration: none; letter-spacing: 1px;
+    transition: all 0.3s; position: relative; padding: 5px 0;
+  }
+  .nav-links a:hover { color: var(--green); text-shadow: 0 0 10px var(--green); }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 2px; background: var(--green);
+    box-shadow: 0 0 8px var(--green); transition: width 0.3s;
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 30px; position: relative; z-index: 1; }
+
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 100px 30px 60px; position: relative;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Press Start 2P', monospace; font-size: 11px;
+    color: var(--green); border: 2px solid var(--green);
+    padding: 10px 20px; margin-bottom: 40px;
+    text-shadow: 0 0 8px var(--green);
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.3), inset 0 0 15px rgba(57, 255, 20, 0.1);
+    animation: pulse-border 2s infinite;
+  }
+  @keyframes pulse-border {
+    0%, 100% { box-shadow: 0 0 20px rgba(57, 255, 20, 0.3), inset 0 0 15px rgba(57, 255, 20, 0.1); }
+    50% { box-shadow: 0 0 35px rgba(57, 255, 20, 0.6), inset 0 0 25px rgba(57, 255, 20, 0.2); }
+  }
+  .hero-badge .dot {
+    width: 8px; height: 8px; background: var(--green);
+    border-radius: 50%; box-shadow: 0 0 10px var(--green);
+    animation: blink 1s infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(36px, 8vw, 80px); line-height: 1.3;
+    margin-bottom: 25px; letter-spacing: 6px;
+  }
+  h1 .line1 {
+    display: block; color: var(--green);
+    text-shadow: 0 0 10px var(--green), 0 0 20px var(--green), 0 0 40px var(--green), 5px 5px 0 var(--purple);
+    animation: glitch-green 4s infinite;
+  }
+  h1 .line2 {
+    display: block; color: var(--purple);
+    text-shadow: 0 0 10px var(--purple), 0 0 20px var(--purple), 0 0 40px var(--purple), -5px -5px 0 var(--green);
+    animation: glitch-purple 4s infinite;
+  }
+  @keyframes glitch-green {
+    0%, 85%, 100% { transform: translate(0); }
+    87% { transform: translate(-3px, 2px); }
+    89% { transform: translate(3px, -2px); }
+    91% { transform: translate(-2px, -1px); }
+  }
+  @keyframes glitch-purple {
+    0%, 85%, 100% { transform: translate(0); }
+    88% { transform: translate(3px, -2px); }
+    90% { transform: translate(-3px, 2px); }
+    92% { transform: translate(2px, 1px); }
+  }
+
+  .hero-subtitle {
+    font-size: 30px; color: var(--purple);
+    margin-bottom: 15px; text-shadow: 0 0 12px var(--purple); letter-spacing: 3px;
+  }
+  .hero-desc {
+    font-size: 24px; color: var(--green-dim);
+    max-width: 600px; margin: 0 auto 40px; line-height: 1.5;
+  }
+  .hero-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+
+  .btn {
+    font-family: 'Press Start 2P', monospace; font-size: 13px;
+    padding: 18px 35px; background: transparent; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 2px;
+    transition: all 0.25s; position: relative; overflow: hidden; border: 3px solid;
+  }
+  .btn::before {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  .btn:hover::before { left: 100%; }
+  .btn-green {
+    color: var(--green); border-color: var(--green);
+    text-shadow: 0 0 8px var(--green);
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.4), inset 0 0 15px rgba(57, 255, 20, 0.05);
+  }
+  .btn-green:hover {
+    background: var(--green); color: var(--bg); text-shadow: none;
+    box-shadow: 0 0 40px var(--green), 0 0 80px rgba(57, 255, 20, 0.5);
+    transform: translate(-3px, -3px);
+  }
+  .btn-purple {
+    color: var(--purple); border-color: var(--purple);
+    text-shadow: 0 0 8px var(--purple);
+    box-shadow: 0 0 15px rgba(176, 38, 255, 0.4), inset 0 0 15px rgba(176, 38, 255, 0.05);
+  }
+  .btn-purple:hover {
+    background: var(--purple); color: var(--bg); text-shadow: none;
+    box-shadow: 0 0 40px var(--purple), 0 0 80px rgba(176, 38, 255, 0.5);
+    transform: translate(-3px, -3px);
+  }
+  .btn:active { transform: translate(2px, 2px) !important; }
+
+  section { padding: 80px 0; }
+  .section-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(20px, 4vw, 32px); text-align: center;
+    margin-bottom: 15px; letter-spacing: 3px;
+  }
+  .section-title.green { color: var(--green); text-shadow: 0 0 15px var(--green), 0 0 30px var(--green); }
+  .section-title.purple { color: var(--purple); text-shadow: 0 0 15px var(--purple), 0 0 30px var(--purple); }
+  .section-subtitle {
+    text-align: center; font-size: 24px; color: var(--green-dim);
+    margin-bottom: 50px; letter-spacing: 2px;
+  }
+
+  .terminal {
+    background: var(--bg-card); border: 2px solid var(--purple);
+    border-radius: 8px; overflow: hidden;
+    box-shadow: 0 0 40px rgba(176, 38, 255, 0.3), inset 0 0 30px rgba(176, 38, 255, 0.05);
+    margin: 40px 0;
+  }
+  .terminal-header {
+    background: var(--purple-dark); padding: 12px 20px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 2px solid var(--purple);
+  }
+  .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .terminal-dot.red { background: #ff3860; box-shadow: 0 0 8px #ff3860; }
+  .terminal-dot.yellow { background: #ffdd57; box-shadow: 0 0 8px #ffdd57; }
+  .terminal-dot.green { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .terminal-title {
+    font-family: 'Press Start 2P', monospace; font-size: 10px;
+    color: var(--purple); margin-left: 10px; letter-spacing: 1px;
+  }
+  .terminal-body {
+    padding: 30px; font-size: 24px; line-height: 1.7; color: var(--green);
+  }
+  .terminal-body .prompt { color: var(--purple); text-shadow: 0 0 8px var(--purple); }
+  .terminal-body .cmd { color: var(--green); text-shadow: 0 0 8px var(--green); }
+  .terminal-body .output { color: var(--green-dim); padding-left: 20px; display: block; margin: 5px 0 15px; }
+  .terminal-body .highlight { color: #ffdd57; text-shadow: 0 0 8px #ffdd57; }
+  .cursor {
+    display: inline-block; width: 12px; height: 22px;
+    background: var(--green); vertical-align: middle; margin-left: 5px;
+    animation: cursor-blink 0.8s infinite; box-shadow: 0 0 8px var(--green);
+  }
+  @keyframes cursor-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px; margin-top: 40px;
+  }
+  .feature-card {
+    background: var(--bg-card); border: 2px solid var(--purple);
+    padding: 35px 25px; text-align: center;
+    transition: all 0.3s; overflow: hidden; cursor: pointer;
+  }
+  .feature-card:hover {
+    transform: translateY(-8px); border-color: var(--green);
+    box-shadow: 0 10px 40px rgba(57, 255, 20, 0.3);
+  }
+  .feature-icon {
+    font-size: 48px; margin-bottom: 20px; display: block;
+    filter: drop-shadow(0 0 10px var(--green));
+  }
+  .feature-card:nth-child(even) .feature-icon { filter: drop-shadow(0 0 10px var(--purple)); }
+  .feature-card h3 {
+    font-family: 'Press Start 2P', monospace; font-size: 14px;
+    color: var(--green); text-shadow: 0 0 10px var(--green);
+    margin-bottom: 15px; letter-spacing: 1px;
+  }
+  .feature-card:nth-child(even) h3 { color: var(--purple); text-shadow: 0 0 10px var(--purple); }
+  .feature-card p { font-size: 22px; color: var(--green-dim); line-height: 1.5; }
+  .feature-card .play-tag {
+    display: inline-block; margin-top: 15px;
+    font-family: 'Press Start 2P', monospace; font-size: 9px;
+    color: var(--bg); background: var(--green);
+    padding: 6px 12px; letter-spacing: 1px;
+    box-shadow: 0 0 15px var(--green);
+  }
+  .feature-card:nth-child(even) .play-tag { background: var(--purple); box-shadow: 0 0 15px var(--purple); }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px; margin: 50px 0;
+  }
+  .stat-box {
+    background: var(--bg-card); border: 2px solid var(--green);
+    padding: 30px 20px; text-align: center;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.2); transition: all 0.3s;
+  }
+  .stat-box:hover { box-shadow: 0 0 40px rgba(57, 255, 20, 0.5); transform: scale(1.05); }
+  .stat-box:nth-child(even) { border-color: var(--purple); box-shadow: 0 0 20px rgba(176, 38, 255, 0.2); }
+  .stat-box:nth-child(even):hover { box-shadow: 0 0 40px rgba(176, 38, 255, 0.5); }
+  .stat-number {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(28px, 5vw, 42px); color: var(--green);
+    text-shadow: 0 0 15px var(--green); display: block; margin-bottom: 10px;
+  }
+  .stat-box:nth-child(even) .stat-number { color: var(--purple); text-shadow: 0 0 15px var(--purple); }
+  .stat-label { font-size: 22px; color: var(--green-dim); letter-spacing: 2px; }
+
+  .cta-section {
+    text-align: center; padding: 80px 30px;
+    background: var(--bg-card);
+    border-top: 2px solid var(--purple); border-bottom: 2px solid var(--purple);
+    margin: 60px 0; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 200%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    animation: scan-line 3s infinite;
+  }
+  @keyframes scan-line { 0% { left: -100%; } 100% { left: 100%; } }
+  .cta-section h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(20px, 4vw, 36px); color: var(--green);
+    text-shadow: 0 0 20px var(--green); margin-bottom: 20px; letter-spacing: 3px;
+  }
+  .cta-section p {
+    font-size: 26px; color: var(--purple);
+    margin-bottom: 35px; text-shadow: 0 0 10px var(--purple);
+  }
+
+  footer {
+    padding: 40px 30px; text-align: center;
+    border-top: 2px solid var(--purple); background: rgba(10, 0, 21, 0.8);
+  }
+  .footer-logo {
+    font-family: 'Press Start 2P', monospace; font-size: 16px;
+    color: var(--green); text-shadow: 0 0 10px var(--green);
+    margin-bottom: 15px; letter-spacing: 2px;
+  }
+  .footer-logo span { color: var(--purple); text-shadow: 0 0 10px var(--purple); }
+  .footer-text { font-size: 20px; color: var(--green-dim); letter-spacing: 2px; }
+  .footer-links {
+    display: flex; justify-content: center; gap: 30px;
+    margin: 20px 0; flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-family: 'Press Start 2P', monospace; font-size: 10px;
+    color: var(--purple); text-decoration: none; letter-spacing: 1px; transition: all 0.3s;
+  }
+  .footer-links a:hover { color: var(--green); text-shadow: 0 0 10px var(--green); }
+
+  .scroll-indicator {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    font-family: 'Press Start 2P', monospace; font-size: 10px;
+    color: var(--purple); text-shadow: 0 0 8px var(--purple);
+    animation: bounce 2s infinite; letter-spacing: 2px;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(10px); }
+  }
+  .scroll-indicator::after { content: '▼'; display: block; text-align: center; margin-top: 8px; font-size: 14px; }
+
+  /* ============ МОДАЛЬНЫЕ ОКНА ИГР ============ */
+  .modal {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(10, 0, 21, 0.92);
+    backdrop-filter: blur(8px);
+    justify-content: center; align-items: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+  }
+  .modal.active { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal-content {
+    background: var(--bg);
+    border: 3px solid var(--purple);
+    box-shadow: 0 0 60px rgba(176, 38, 255, 0.5), inset 0 0 40px rgba(176, 38, 255, 0.1);
+    max-width: 600px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.4s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-header {
+    background: var(--purple-dark);
+    padding: 15px 25px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px solid var(--purple);
+  }
+  .modal-title {
+    font-family: 'Press Start 2P', monospace; font-size: 14px;
+    color: var(--green); text-shadow: 0 0 10px var(--green); letter-spacing: 2px;
+  }
+  .modal-close {
+    background: transparent; border: 2px solid var(--purple);
+    color: var(--purple); width: 32px; height: 32px;
+    font-family: 'Press Start 2P', monospace; font-size: 12px;
+    cursor: pointer; transition: all 0.2s;
+    text-shadow: 0 0 8px var(--purple);
+  }
+  .modal-close:hover {
+    background: var(--purple); color: var(--bg);
+    box-shadow: 0 0 20px var(--purple);
+  }
+
+  .modal-body { padding: 25px; }
+
+  .game-info {
+    display: flex; justify-content: space-between;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+  }
+  .game-info-item {
+    font-family: 'Press Start 2P', monospace; font-size: 11px;
+    color: var(--green); text-shadow: 0 0 8px var(--green);
+    border: 2px solid var(--green); padding: 10px 15px;
+    flex: 1; text-align: center; min-width: 120px;
+  }
+  .game-info-item.purple {
+    color: var(--purple); border-color: var(--purple);
+    text-shadow: 0 0 8px var(--purple);
+  }
+  .game-info-item .label {
+    display: block; font-size: 8px; color: var(--green-dim);
+    margin-bottom: 5px; letter-spacing: 1px;
+  }
+
+  .game-area {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--green);
+    box-shadow: inset 0 0 30px rgba(57, 255, 20, 0.1);
+    display: flex; justify-content: center; align-items: center;
+    min-height: 300px;
+    position: relative;
+  }
+
+  .game-controls {
+    display: flex; gap: 10px; margin-top: 20px;
+    justify-content: center; flex-wrap: wrap;
+  }
+
+  .game-btn {
+    font-family: 'Press Start 2P', monospace; font-size: 10px;
+    padding: 12px 20px; background: transparent;
+    cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+    transition: all 0.25s; border: 2px solid;
+  }
+  .game-btn.green {
+    color: var(--green); border-color: var(--green);
+    text-shadow: 0 0 8px var(--green);
+  }
+  .game-btn.green:hover {
+    background: var(--green); color: var(--bg);
+    box-shadow: 0 0 20px var(--green);
+  }
+  .game-btn.purple {
+    color: var(--purple); border-color: var(--purple);
+    text-shadow: 0 0 8px var(--purple);
+  }
+  .game-btn.purple:hover {
+    background: var(--purple); color: var(--bg);
+    box-shadow: 0 0 20px var(--purple);
+  }
+
+  /* Snake */
+  #snakeCanvas {
+    display: block;
+    background: #000;
+    image-rendering: pixelated;
+  }
+
+  /* Memory */
+  .memory-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px; padding: 15px; width: 100%;
+  }
+  .memory-card {
+    aspect-ratio: 1;
+    background: var(--purple-dark);
+    border: 2px solid var(--purple);
+    display: flex; justify-content: center; align-items: center;
+    font-size: 36px; cursor: pointer;
+    transition: all 0.3s;
+    user-select: none;
+    position: relative;
+  }
+  .memory-card:hover { border-color: var(--green); box-shadow: 0 0 15px var(--green); }
+  .memory-card.flipped {
+    background: var(--bg-card);
+    border-color: var(--green);
+    box-shadow: 0 0 20px var(--green);
+  }
+  .memory-card.matched {
+    background: rgba(57, 255, 20, 0.15);
+    border-color: var(--green);
+    box-shadow: 0 0 25px var(--green);
+    cursor: default;
+  }
+  .memory-card .card-face { display: none; }
+  .memory-card.flipped .card-face,
+  .memory-card.matched .card-face { display: block; }
+  .memory-card .card-back {
+    font-family: 'Press Start 2P', monospace; font-size: 14px;
+    color: var(--purple); text-shadow: 0 0 8px var(--purple);
+  }
+  .memory-card.flipped .card-back,
+  .memory-card.matched .card-back { display: none; }
+
+  /* Reaction */
+  .reaction-box {
+    width: 100%; min-height: 300px;
+    display: flex; justify-content: center; align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: background 0.15s;
+    padding: 30px;
+    text-align: center;
+  }
+  .reaction-box.waiting { background: rgba(176, 38, 255, 0.15); }
+  .reaction-box.ready {
+    background: rgba(57, 255, 20, 0.25);
+    box-shadow: inset 0 0 60px rgba(57, 255, 20, 0.3);
+  }
+  .reaction-box.early { background: rgba(255, 56, 96, 0.2); }
+  .reaction-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px; line-height: 2; letter-spacing: 2px;
+  }
+  .reaction-time {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 48px; margin: 20px 0;
+    text-shadow: 0 0 20px currentColor;
+  }
+
+  /* Clicker */
+  .clicker-area {
+    width: 100%; padding: 30px 15px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 20px;
+  }
+  .clicker-target {
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--green) 0%, var(--purple-dark) 70%);
+    border: 4px solid var(--green);
+    box-shadow: 0 0 40px var(--green), inset 0 0 30px rgba(0,0,0,0.5);
+    cursor: pointer;
+    display: flex; justify-content: center; align-items: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px; color: var(--bg);
+    transition: transform 0.08s;
+    user-select: none;
+    text-shadow: 0 0 10px var(--bg);
+  }
+  .clicker-target:active { transform: scale(0.92); }
+  .clicker-target.purple {
+    background: radial-gradient(circle, var(--purple) 0%, var(--purple-dark) 70%);
+    border-color: var(--purple);
+    box-shadow: 0 0 40px var(--purple), inset 0 0 30px rgba(0,0,0,0.5);
+  }
+  .clicker-progress {
+    width: 100%; height: 20px;
+    background: rgba(0,0,0,0.5);
+    border: 2px solid var(--purple);
+    overflow: hidden;
+  }
+  .clicker-bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--green), var(--purple));
+    box-shadow: 0 0 15px var(--green);
+    transition: width 0.1s;
+  }
+  .clicker-message {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px; color: var(--green);
+    text-shadow: 0 0 10px var(--green);
+    text-align: center; min-height: 40px;
+    letter-spacing: 1px;
+  }
+
+  /* ============ MINESWEEPER ============ */
+  .mine-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 3px;
+    padding: 15px;
+    width: 100%;
+    max-width: 450px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--purple);
+  }
+  .mine-cell {
+    aspect-ratio: 1;
+    background: var(--purple-dark);
+    border: 2px solid var(--purple);
+    display: flex; justify-content: center; align-items: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s;
+    color: var(--green);
+    text-shadow: 0 0 8px currentColor;
+  }
+  .mine-cell:hover:not(.revealed):not(.flagged) {
+    background: var(--bg-card);
+    border-color: var(--green);
+    box-shadow: 0 0 12px var(--green);
+  }
+  .mine-cell.revealed {
+    background: rgba(10, 0, 21, 0.8);
+    border-color: rgba(176, 38, 255, 0.3);
+    cursor: default;
+  }
+  .mine-cell.flagged {
+    background: rgba(176, 38, 255, 0.2);
+    border-color: var(--purple);
+    color: var(--purple);
+  }
+  .mine-cell.mine-exploded {
+    background: rgba(255, 56, 96, 0.4);
+    border-color: #ff3860;
+    color: #ff3860;
+    animation: explode 0.4s;
+  }
+  @keyframes explode {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); box-shadow: 0 0 25px #ff3860; }
+    100% { transform: scale(1); }
+  }
+  .mine-cell.mine-shown {
+    background: rgba(255, 56, 96, 0.15);
+    border-color: rgba(255, 56, 96, 0.5);
+  }
+  .mine-cell.win-reveal {
+    background: rgba(57, 255, 20, 0.2);
+    border-color: var(--green);
+    box-shadow: 0 0 15px var(--green);
+  }
+  /* Цвета цифр */
+  .mine-cell.n1 { color: #39ff14; }
+  .mine-cell.n2 { color: #00cc44; }
+  .mine-cell.n3 { color: #b026ff; }
+  .mine-cell.n4 { color: #6a0dad; }
+  .mine-cell.n5 { color: #ffdd57; }
+  .mine-cell.n6 { color: #ff9900; }
+  .mine-cell.n7 { color: #ff3860; }
+  .mine-cell.n8 { color: #ffffff; }
+
+  .mine-status {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    text-align: center;
+    padding: 15px;
+    letter-spacing: 2px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mine-status.win {
+    color: var(--green);
+    text-shadow: 0 0 15px var(--green);
+  }
+  .mine-status.lose {
+    color: #ff3860;
+    text-shadow: 0 0 15px #ff3860;
+  }
+  .mine-status.playing {
+    color: var(--purple);
+    text-shadow: 0 0 10px var(--purple);
+  }
+
+  .mine-difficulty {
+    display: flex; gap: 8px; justify-content: center;
+    margin-bottom: 15px; flex-wrap: wrap;
+  }
+  .mine-diff-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    padding: 8px 14px;
+    background: transparent;
+    border: 2px solid var(--purple);
+    color: var(--purple);
+    cursor: pointer;
+    text-shadow: 0 0 6px var(--purple);
+    transition: all 0.2s;
+    letter-spacing: 1px;
+  }
+  .mine-diff-btn:hover {
+    border-color: var(--green);
+    color: var(--green);
+    text-shadow: 0 0 8px var(--green);
+  }
+  .mine-diff-btn.active {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--bg);
+    box-shadow: 0 0 15px var(--green);
+    text-shadow: none;
+  }
+
+  .game-hint {
+    font-size: 18px; color: var(--green-dim);
+    text-align: center; margin-top: 15px;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 700px) {
+    .nav-links { gap: 15px; }
+    .nav-links a { font-size: 8px; }
+    .logo { font-size: 11px; }
+    nav { padding: 12px 15px; }
+    .btn { font-size: 11px; padding: 14px 22px; }
+    .terminal-body { font-size: 20px; padding: 20px; }
+    .modal-title { font-size: 11px; }
+    .memory-card { font-size: 24px; }
+    .reaction-time { font-size: 32px; }
+    .clicker-target { width: 140px; height: 140px; font-size: 11px; }
+    .mine-cell { font-size: 11px; }
+    .mine-grid { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<nav>
+  <div class="logo">RETRO<span>//ZONE</span></div>
+  <ul class="nav-links">
+    <li><a href="#home">HOME</a></li>
+    <li><a href="#about">ABOUT</a></li>
+    <li><a href="#games">GAMES</a></li>
+    <li><a href="#contact">CONTACT</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    SYSTEM ONLINE // 198X
+  </div>
+  <h1>
+    <span class="line1">RETRO</span>
+    <span class="line2">ZONE</span>
+  </h1>
+  <div class="hero-subtitle">// НЕОНОВЫЕ МЕЧТЫ //</div>
+  <p class="hero-desc">Добро пожаловать в цифровой мир, где зелёный фосфор встречается с фиолетовым неоном. Машина времени в эпоху аркадных автоматов.</p>
+  <div class="hero-buttons">
+    <button class="btn btn-green" data-game="snake">▶ ИГРАТЬ</button>
+    <button class="btn btn-purple" data-game="minesweeper">💣 САПЁР</button>
+  </div>
+  <div class="scroll-indicator">SCROLL</div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <h2 class="section-title green">SYSTEM.LOG</h2>
+    <p class="section-subtitle">// ЗАГРУЗКА ДАННЫХ //</p>
+
+    <div class="terminal">
+      <div class="terminal-header">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-title">terminal@retro-zone:~</span>
+      </div>
+      <div class="terminal-body">
+        <span class="prompt">user@retro:~$</span> <span class="cmd">load --era 1985</span>
+        <span class="output">► Загрузка эпохи <span class="highlight">неоновых огней</span>...</span>
+        <span class="output">► Инициализация <span class="highlight">синтезаторов</span>... OK</span>
+        <span class="output">► Подключение к <span class="highlight">параллельной реальности</span>... OK</span>
+        <br>
+        <span class="prompt">user@retro:~$</span> <span class="cmd">cat welcome.txt</span>
+        <span class="output">Этот уголок интернета создан для тех, кто скучает по кассетным магнитофонам, пиксельной графике и звукам модемного соединения. Здесь каждый байт пропитан ностальгией.</span>
+        <br>
+        <span class="prompt">user@retro:~$</span> <span class="cursor"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="games">
+  <div class="container">
+    <h2 class="section-title purple">ARCADE</h2>
+    <p class="section-subtitle">// ВЫБЕРИ ИГРУ //</p>
+
+    <div class="features-grid">
+      <div class="feature-card" data-game="snake">
+        <span class="feature-icon">🐍</span>
+        <h3>SNAKE</h3>
+        <p>Классическая змейка. Собирай неоновые яблоки и не врезайся в стены!</p>
+        <span class="play-tag">▶ ИГРАТЬ</span>
+      </div>
+      <div class="feature-card" data-game="memory">
+        <span class="feature-icon">🧠</span>
+        <h3>MEMORY</h3>
+        <p>Найди все пары карточек. Тренируй память в стиле ретро-аркад!</p>
+        <span class="play-tag">▶ ИГРАТЬ</span>
+      </div>
+      <div class="feature-card" data-game="reaction">
+        <span class="feature-icon">⚡</span>
+        <h3>REACTION</h3>
+        <p>Тест на скорость реакции. Как быстро ты можешь нажать кнопку?</p>
+        <span class="play-tag">▶ ИГРАТЬ</span>
+      </div>
+      <div class="feature-card" data-game="clicker">
+        <span class="feature-icon">🎯</span>
+        <h3>CLICKER</h3>
+        <p>Бешеный кликер! Нажми как можно больше раз за 10 секунд!</p>
+        <span class="play-tag">▶ ИГРАТЬ</span>
+      </div>
+      <div class="feature-card" data-game="minesweeper">
+        <span class="feature-icon">💣</span>
+        <h3>MINESWEEPER</h3>
+        <p>Легендарный сапёр! Обезврь все мины, не подорвавшись на них.</p>
+        <span class="play-tag">▶ ИГРАТЬ</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2 class="section-title green">STATS</h2>
+    <p class="section-subtitle">// ЦИФРЫ НЕ ВРУТ //</p>
+
+    <div class="stats">
+      <div class="stat-box">
+        <span class="stat-number">5</span>
+        <span class="stat-label">ИГРЫ</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number">∞</span>
+        <span class="stat-label">НЕОН</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number">8BIT</span>
+        <span class="stat-label">ГРАФИКА</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number">24/7</span>
+        <span class="stat-label">ОНЛАЙН</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="cta-section">
+      <h2>ГОТОВ К ПУТЕШЕСТВИЮ?</h2>
+      <p>// НАЖМИ КНОПКУ И ПОГРУЗИСЬ В РЕТРО //</p>
+      <div class="hero-buttons">
+        <button class="btn btn-green" data-game="minesweeper">💣 САПЁР</button>
+        <button class="btn btn-purple" data-game="reaction">◆ РЕАКЦИЯ</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">RETRO<span>//ZONE</span></div>
+  <div class="footer-links">
+    <a href="#home">HOME</a>
+    <a href="#about">ABOUT</a>
+    <a href="#games">GAMES</a>
+    <a href="#contact">CONTACT</a>
+  </div>
+  <div class="footer-text">[ © 198X — RETRO CORP // ALL RIGHTS RESERVED ]</div>
+</footer>
+
+<!-- ============ МОДАЛКА SNAKE ============ -->
+<div class="modal" id="modal-snake">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">🐍 SNAKE.EXE</div>
+      <button class="modal-close" data-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="game-info">
+        <div class="game-info-item">
+          <span class="label">SCORE</span>
+          <span id="snake-score">0</span>
+        </div>
+        <div class="game-info-item purple">
+          <span class="label">BEST</span>
+          <span id="snake-best">0</span>
+        </div>
+      </div>
+      <div class="game-area">
+        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+      </div>
+      <div class="game-controls">
+        <button class="game-btn green" id="snake-start">▶ СТАРТ</button>
+        <button class="game-btn purple" id="snake-pause">⏸ ПАУЗА</button>
+      </div>
+      <div class="game-hint">Управление: ← ↑ ↓ → или WASD</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ МОДАЛКА MEMORY ============ -->
+<div class="modal" id="modal-memory">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">🧠 MEMORY.EXE</div>
+      <button class="modal-close" data-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="game-info">
+        <div class="game-info-item">
+          <span class="label">ХОДЫ</span>
+          <span id="memory-moves">0</span>
+        </div>
+        <div class="game-info-item purple">
+          <span class="label">ПАРЫ</span>
+          <span id="memory-pairs">0/8</span>
+        </div>
+      </div>
+      <div class="game-area" style="padding: 0;">
+        <div class="memory-grid" id="memory-grid"></div>
+      </div>
+      <div class="game-controls">
+        <button class="game-btn green" id="memory-reset">↻ ЗАНОВО</button>
+      </div>
+      <div class="game-hint">Нажимай на карточки и находи пары!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ МОДАЛКА REACTION ============ -->
+<div class="modal" id="modal-reaction">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">⚡ REACTION.EXE</div>
+      <button class="modal-close" data-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="game-info">
+        <div class="game-info-item">
+          <span class="label">LAST</span>
+          <span id="reaction-last">— ms</span>
+        </div>
+        <div class="game-info-item purple">
+          <span class="label">BEST</span>
+          <span id="reaction-best">— ms</span>
+        </div>
+      </div>
+      <div class="game-area">
+        <div class="reaction-box waiting" id="reaction-box">
+          <div class="reaction-text" id="reaction-text">НАЖМИ ЧТОБЫ НАЧАТЬ</div>
+        </div>
+      </div>
+      <div class="game-controls">
+        <button class="game-btn green" id="reaction-reset">↻ ЗАНОВО</button>
+      </div>
+      <div class="game-hint">Когда экран станет зелёным — жми как можно быстрее!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ МОДАЛКА CLICKER ============ -->
+<div class="modal" id="modal-clicker">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">🎯 CLICKER.EXE</div>
+      <button class="modal-close" data-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="game-info">
+        <div class="game-info-item">
+          <span class="label">CLICKS</span>
+          <span id="clicker-count">0</span>
+        </div>
+        <div class="game-info-item purple">
+          <span class="label">TIME</span>
+          <span id="clicker-time">10.0s</span>
+        </div>
+      </div>
+      <div class="game-area">
+        <div class="clicker-area">
+          <div class="clicker-progress">
+            <div class="clicker-bar" id="clicker-bar"></div>
+          </div>
+          <div class="clicker-target" id="clicker-target">CLICK!</div>
+          <div class="clicker-message" id="clicker-message">НАЖМИ СТАРТ</div>
+        </div>
+      </div>
+      <div class="game-controls">
+        <button class="game-btn green" id="clicker-start">▶ СТАРТ</button>
+        <button class="game-btn purple" id="clicker-reset">↻ СБРОС</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ МОДАЛКА MINESWEEPER ============ -->
+<div class="modal" id="modal-minesweeper">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">💣 MINESWEEPER.EXE</div>
+      <button class="modal-close" data-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="mine-difficulty">
+        <button class="mine-diff-btn active" data-diff="easy">EASY 9×9</button>
+        <button class="mine-diff-btn" data-diff="medium">MEDIUM 12×12</button>
+        <button class="mine-diff-btn" data-diff="hard">HARD 16×16</button>
+      </div>
+      <div class="game-info">
+        <div class="game-info-item">
+          <span class="label">💣 MINES</span>
+          <span id="mine-flags">10</span>
+        </div>
+        <div class="game-info-item purple">
+          <span class="label">⏱ TIME</span>
+          <span id="mine-time">000</span>
+        </div>
+      </div>
+      <div class="game-area" style="padding: 10px;">
+        <div class="mine-grid" id="mine-grid"></div>
+      </div>
+      <div class="mine-status playing" id="mine-status">НАЖМИ НА КЛЕТКУ ЧТОБЫ НАЧАТЬ</div>
+      <div class="game-controls">
+        <button class="game-btn green" id="mine-reset">↻ НОВАЯ ИГРА</button>
+      </div>
+      <div class="game-hint">ЛКМ — открыть клетку · ПКМ — поставить флажок 🚩</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== Звёзды =====
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    star.style.animationDuration = (2 + Math.random() * 3) + 's';
+    if (Math.random() > 0.5) {
+      star.style.background = '#b026ff';
+      star.style.boxShadow = '0 0 6px #b026ff';
+    }
+    starsContainer.appendChild(star);
+  }
+
+  // ===== Модальные окна =====
+  function openModal(id) {
+    document.getElementById('modal-' + id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+    if (id === 'snake') initSnake();
+    if (id === 'memory') initMemory();
+    if (id === 'reaction') initReaction();
+    if (id === 'clicker') initClicker();
+    if (id === 'minesweeper') initMinesweeper();
+  }
+  function closeModal(modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (snakeInterval) { clearInterval(snakeInterval); snakeInterval = null; }
+    if (reactionTimeout) { clearTimeout(reactionTimeout); reactionTimeout = null; }
+    if (clickerInterval) { clearInterval(clickerInterval); clickerInterval = null; }
+    if (mineTimerInterval) { clearInterval(mineTimerInterval); mineTimerInterval = null; }
+  }
+
+  document.querySelectorAll('[data-game]').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.game));
+  });
+  document.querySelectorAll('[data-close]').forEach(btn => {
+    btn.addEventListener('click', () => closeModal(btn.closest('.modal')));
+  });
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal(modal);
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal.active').forEach(closeModal);
+    }
+  });
+
+  // ===== Анимация появления =====
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.feature-card, .stat-box, .terminal').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+
+  // ==========================================================
+  // ================== ИГРА 1: SNAKE =========================
+  // ==========================================================
+  const snakeCanvas = document.getElementById('snakeCanvas');
+  const snakeCtx = snakeCanvas.getContext('2d');
+  const GRID = 20;
+  const CELLS = snakeCanvas.width / GRID;
+  let snake, food, dir, nextDir, snakeScore, snakeBest = 0, snakeInterval, snakeRunning = false, snakePaused = false;
+
+  function initSnake() {
+    snake = [{x: 10, y: 10}, {x: 9, y: 10}, {x: 8, y: 10}];
+    dir = {x: 1, y: 0};
+    nextDir = {x: 1, y: 0};
+    snakeScore = 0;
+    snakePaused = false;
+    placeFood();
+    updateSnakeUI();
+    drawSnake();
+  }
+
+  function placeFood() {
+    while (true) {
+      const fx = Math.floor(Math.random() * CELLS);
+      const fy = Math.floor(Math.random() * CELLS);
+      if (!snake.some(s => s.x === fx && s.y === fy)) {
+        food = {x: fx, y: fy};
+        return;
+      }
+    }
+  }
+
+  function updateSnakeUI() {
+    document.getElementById('snake-score').textContent = snakeScore;
+    document.getElementById('snake-best').textContent = snakeBest;
+  }
+
+  function drawSnake() {
+    snakeCtx.fillStyle = '#000';
+    snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+    snakeCtx.strokeStyle = 'rgba(176, 38, 255, 0.15)';
+    snakeCtx.lineWidth = 1;
+    for (let i = 0; i <= CELLS; i++) {
+      snakeCtx.beginPath();
+      snakeCtx.moveTo(i * GRID, 0);
+      snakeCtx.lineTo(i * GRID, snakeCanvas.height);
+      snakeCtx.stroke();
+      snakeCtx.beginPath();
+      snakeCtx.moveTo(0, i * GRID);
+      snakeCtx.lineTo(snakeCanvas.width, i * GRID);
+      snakeCtx.stroke();
+    }
+
+    snakeCtx.fillStyle = '#b026ff';
+    snakeCtx.shadowColor = '#b026ff';
+    snakeCtx.shadowBlur = 15;
+    snakeCtx.fillRect(food.x * GRID + 2, food.y * GRID + 2, GRID - 4, GRID - 4);
+    snakeCtx.shadowBlur = 0;
+
+    snake.forEach((seg, i) => {
+      if (i === 0) {
+        snakeCtx.fillStyle = '#39ff14';
+        snakeCtx.shadowColor = '#39ff14';
+        snakeCtx.shadowBlur = 15;
+      } else {
+        snakeCtx.fillStyle = '#00cc44';
+        snakeCtx.shadowColor = '#00cc44';
+        snakeCtx.shadowBlur = 8;
+      }
+      snakeCtx.fillRect(seg.x * GRID + 1, seg.y * GRID + 1, GRID - 2, GRID - 2);
+    });
+    snakeCtx.shadowBlur = 0;
+  }
+
+  function snakeStep() {
+    if (snakePaused) return;
+    dir = nextDir;
+    const head = {x: snake[0].x + dir.x, y: snake[0].y + dir.y};
+
+    if (head.x < 0 || head.x >= CELLS || head.y < 0 || head.y >= CELLS) {
+      gameOverSnake();
+      return;
+    }
+    if (snake.some(s => s.x === head.x && s.y === head.y)) {
+      gameOverSnake();
+      return;
+    }
+
+    snake.unshift(head);
+
+    if (head.x === food.x && head.y === food.y) {
+      snakeScore += 10;
+      if (snakeScore > snakeBest) snakeBest = snakeScore;
+      placeFood();
+      updateSnakeUI();
+    } else {
+      snake.pop();
+    }
+    drawSnake();
+  }
+
+  function gameOverSnake() {
+    clearInterval(snakeInterval);
+    snakeInterval = null;
+    snakeRunning = false;
+    snakeCtx.fillStyle = 'rgba(10, 0, 21, 0.85)';
+    snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+    snakeCtx.fillStyle = '#39ff14';
+    snakeCtx.shadowColor = '#39ff14';
+    snakeCtx.shadowBlur = 20;
+    snakeCtx.font = '24px "Press Start 2P"';
+    snakeCtx.textAlign = 'center';
+    snakeCtx.fillText('GAME OVER', snakeCanvas.width / 2, snakeCanvas.height / 2 - 15);
+    snakeCtx.font = '12px "Press Start 2P"';
+    snakeCtx.fillStyle = '#b026ff';
+    snakeCtx.shadowColor = '#b026ff';
+    snakeCtx.fillText('SCORE: ' + snakeScore, snakeCanvas.width / 2, snakeCanvas.height / 2 + 20);
+    snakeCtx.shadowBlur = 0;
+  }
+
+  document.getElementById('snake-start').addEventListener('click', () => {
+    if (snakeInterval) clearInterval(snakeInterval);
+    initSnake();
+    snakeRunning = true;
+    snakeInterval = setInterval(snakeStep, 120);
+  });
+
+  document.getElementById('snake-pause').addEventListener('click', () => {
+    if (!snakeRunning) return;
+    snakePaused = !snakePaused;
+    document.getElementById('snake-pause').textContent = snakePaused ? '▶ ПРОДОЛЖИТЬ' : '⏸ ПАУЗА';
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!document.getElementById('modal-snake').classList.contains('active')) return;
+    const key = e.key.toLowerCase();
+    if ((key === 'arrowup' || key === 'w') && dir.y !== 1) nextDir = {x: 0, y: -1};
+    else if ((key === 'arrowdown' || key === 's') && dir.y !== -1) nextDir = {x: 0, y: 1};
+    else if ((key === 'arrowleft' || key === 'a') && dir.x !== 1) nextDir = {x: -1, y: 0};
+    else if ((key === 'arrowright' || key === 'd') && dir.x !== -1) nextDir = {x: 1, y: 0};
+  });
+
+  // ==========================================================
+  // ================== ИГРА 2: MEMORY ========================
+  // ==========================================================
+  const memoryGrid = document.getElementById('memory-grid');
+  const memorySymbols = ['🕹️', '📼', '💾', '📡', '🌆', '🎛️', '🎮', '👾'];
+  let memoryCards = [], flipped = [], matched = 0, moves = 0, memoryLocked = false;
+
+  function initMemory() {
+    memoryGrid.innerHTML = '';
+    memoryCards = [];
+    flipped = [];
+    matched = 0;
+    moves = 0;
+    memoryLocked = false;
+    updateMemoryUI();
+
+    const deck = [...memorySymbols, ...memorySymbols].sort(() => Math.random() - 0.5);
+    deck.forEach((sym, i) => {
+      const card = document.createElement('div');
+      card.className = 'memory-card';
+      card.dataset.symbol = sym;
+      card.dataset.index = i;
+      card.innerHTML = `<span class="card-face">${sym}</span><span class="card-back">?</span>`;
+      card.addEventListener('click', () => flipCard(card));
+      memoryGrid.appendChild(card);
+      memoryCards.push(card);
+    });
+  }
+
+  function updateMemoryUI() {
+    document.getElementById('memory-moves').textContent = moves;
+    document.getElementById('memory-pairs').textContent = matched + '/8';
+  }
+
+  function flipCard(card) {
+    if (memoryLocked) return;
+    if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+    if (flipped.length >= 2) return;
+
+    card.classList.add('flipped');
+    flipped.push(card);
+
+    if (flipped.length === 2) {
+      moves++;
+      updateMemoryUI();
+      memoryLocked = true;
+
+      if (flipped[0].dataset.symbol === flipped[1].dataset.symbol) {
+        setTimeout(() => {
+          flipped.forEach(c => c.classList.add('matched'));
+          flipped = [];
+          matched++;
+          updateMemoryUI();
+          memoryLocked = false;
+          if (matched === 8) {
+            setTimeout(() => alert('🎉 ПОБЕДА! Ходов: ' + moves), 300);
+          }
+        }, 400);
+      } else {
+        setTimeout(() => {
+          flipped.forEach(c => c.classList.remove('flipped'));
+          flipped = [];
+          memoryLocked = false;
+        }, 900);
+      }
+    }
+  }
+
+  document.getElementById('memory-reset').addEventListener('click', initMemory);
+
+  // ==========================================================
+  // ================== ИГРА 3: REACTION ======================
+  // ==========================================================
+  const reactionBox = document.getElementById('reaction-box');
+  const reactionText = document.getElementById('reaction-text');
+  let reactionState = 'idle';
+  let reactionStart = 0;
+  let reactionTimeout = null;
+  let reactionBest = null;
+
+  function initReaction() {
+    reactionState = 'idle';
+    reactionBox.className = 'reaction-box waiting';
+    reactionText.innerHTML = 'НАЖМИ ЧТОБЫ НАЧАТЬ';
+    if (reactionTimeout) { clearTimeout(reactionTimeout); reactionTimeout = null; }
+  }
+
+  reactionBox.addEventListener('click', () => {
+    if (reactionState === 'idle') {
+      reactionState = 'waiting';
+      reactionBox.className = 'reaction-box waiting';
+      reactionText.innerHTML = 'ЖДИ ЗЕЛЁНОГО...';
+      const delay = 1500 + Math.random() * 3000;
+      reactionTimeout = setTimeout(() => {
+        reactionState = 'ready';
+        reactionBox.className = 'reaction-box ready';
+        reactionText.innerHTML = 'ЖМИИИ!!!';
+        reactionStart = Date.now();
+      }, delay);
+    } else if (reactionState === 'waiting') {
+      clearTimeout(reactionTimeout);
+      reactionTimeout = null;
+      reactionState = 'idle';
+      reactionBox.className = 'reaction-box early';
+      reactionText.innerHTML = 'СЛИШКОМ РАНО!<br><br>НАЖМИ СНОВА';
+      setTimeout(() => {
+        reactionBox.className = 'reaction-box waiting';
+        reactionText.innerHTML = 'НАЖМИ ЧТОБЫ НАЧАТЬ';
+      }, 1500);
+    } else if (reactionState === 'ready') {
+      const time = Date.now() - reactionStart;
+      reactionState = 'idle';
+      reactionBox.className = 'reaction-box waiting';
+      reactionText.innerHTML = `ТВОЁ ВРЕМЯ<br><span class="reaction-time" style="color: var(--green);">${time} ms</span><br>НАЖМИ ДЛЯ ПОВТОРА`;
+      document.getElementById('reaction-last').textContent = time + ' ms';
+      if (!reactionBest || time < reactionBest) {
+        reactionBest = time;
+        document.getElementById('reaction-best').textContent = time + ' ms';
+      }
+    }
+  });
+
+  document.getElementById('reaction-reset').addEventListener('click', initReaction);
+
+  // ==========================================================
+  // ================== ИГРА 4: CLICKER =======================
+  // ==========================================================
+  const clickerTarget = document.getElementById('clicker-target');
+  const clickerCount = document.getElementById('clicker-count');
+  const clickerTime = document.getElementById('clicker-time');
+  const clickerBar = document.getElementById('clicker-bar');
+  const clickerMessage = document.getElementById('clicker-message');
+  let clickerClicks = 0;
+  let clickerTimeLeft = 10;
+  let clickerInterval = null;
+  let clickerActive = false;
+
+  function initClicker() {
+    clickerClicks = 0;
+    clickerTimeLeft = 10;
+    clickerActive = false;
+    if (clickerInterval) { clearInterval(clickerInterval); clickerInterval = null; }
+    clickerCount.textContent = '0';
+    clickerTime.textContent = '10.0s';
+    clickerBar.style.width = '0%';
+    clickerMessage.textContent = 'НАЖМИ СТАРТ';
+    clickerTarget.classList.remove('purple');
+    clickerTarget.textContent = 'CLICK!';
+  }
+
+  document.getElementById('clicker-start').addEventListener('click', () => {
+    if (clickerActive) return;
+    initClicker();
+    clickerActive = true;
+    clickerMessage.textContent = 'ЖМИ! ЖМИ! ЖМИ!';
+    clickerTarget.classList.add('purple');
+    const startTime = Date.now();
+    clickerInterval = setInterval(() => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      clickerTimeLeft = Math.max(0, 10 - elapsed);
+      clickerTime.textContent = clickerTimeLeft.toFixed(1) + 's';
+      clickerBar.style.width = ((10 - clickerTimeLeft) / 10 * 100) + '%';
+      if (clickerTimeLeft <= 0) {
+        clearInterval(clickerInterval);
+        clickerInterval = null;
+        clickerActive = false;
+        clickerTarget.classList.remove('purple');
+        clickerTarget.textContent = 'END';
+        let msg = '';
+        if (clickerClicks >= 100) msg = '🏆 ЛЕГЕНДА! ' + clickerClicks + ' КЛИКОВ!';
+        else if (clickerClicks >= 70) msg = '🔥 НЕВЕРОЯТНО! ' + clickerClicks + ' КЛИКОВ!';
+        else if (clickerClicks >= 50) msg = '⚡ ОТЛИЧНО! ' + clickerClicks + ' КЛИКОВ!';
+        else if (clickerClicks >= 30) msg = '👍 НЕПЛОХО! ' + clickerClicks + ' КЛИКОВ!';
+        else msg = '💤 МОЖНО ЛУЧШЕ! ' + clickerClicks + ' КЛИКОВ';
+        clickerMessage.textContent = msg;
+      }
+    }, 50);
+  });
+
+  document.getElementById('clicker-reset').addEventListener('click', initClicker);
+
+  clickerTarget.addEventListener('click', () => {
+    if (!clickerActive) return;
+    clickerClicks++;
+    clickerCount.textContent = clickerClicks;
+    clickerTarget.style.transform = 'scale(0.92)';
+    setTimeout(() => { clickerTarget.style.transform = 'scale(1)'; }, 80);
+  });
+
+  // ==========================================================
+  // ================== ИГРА 5: MINESWEEPER ===================
+  // ==========================================================
+  const mineGrid = document.getElementById('mine-grid');
+  const mineFlagsEl = document.getElementById('mine-flags');
+  const mineTimeEl = document.getElementById('mine-time');
+  const mineStatusEl = document.getElementById('mine-status');
+
+  const MINE_DIFFS = {
+    easy:   { rows: 9,  cols: 9,  mines: 10 },
+    medium: { rows: 12, cols: 12, mines: 25 },
+    hard:   { rows: 16, cols: 16, mines: 50 }
+  };
+
+  let mineRows = 9, mineCols = 9, mineTotal = 10;
+  let mineBoard = [];       // {mine, revealed, flagged, adjacent}
+  let mineState = 'idle';   // idle, playing, won, lost
+  let mineFlagsCount = 0;
+  let mineRevealedCount = 0;
+  let mineTime = 0;
+  let mineTimerInterval = null;
+  let mineFirstClick = true;
+
+  function initMinesweeper() {
+    buildMineBoard();
+  }
+
+  function buildMineBoard() {
+    if (mineTimerInterval) { clearInterval(mineTimerInterval); mineTimerInterval = null; }
+    mineState = 'idle';
+    mineFlagsCount = 0;
+    mineRevealedCount = 0;
+    mineTime = 0;
+    mineFirstClick = true;
+    mineTimeEl.textContent = '000';
+    mineFlagsEl.textContent = mineTotal;
+    mineStatusEl.textContent = 'НАЖМИ НА КЛЕТКУ ЧТОБЫ НАЧАТЬ';
+    mineStatusEl.className = 'mine-status playing';
+
+    mineBoard = [];
+    for (let r = 0; r < mineRows; r++) {
+      const row = [];
+      for (let c = 0; c < mineCols; c++) {
+        row.push({ mine: false, revealed: false, flagged: false, adjacent: 0 });
+      }
+      mineBoard.push(row);
+    }
+
+    renderMineGrid();
+  }
+
+  function placeMines(safeR, safeC) {
+    // Размещаем мины, избегая клетки первого клика и её соседей
+    const safeCells = new Set();
+    for (let dr = -1; dr <= 1; dr++) {
+      for (let dc = -1; dc <= 1; dc++) {
+        const nr = safeR + dr, nc = safeC + dc;
+        if (nr >= 0 && nr < mineRows && nc >= 0 && nc < mineCols) {
+          safeCells.add(nr * mineCols + nc);
+        }
+      }
+    }
+
+    let placed = 0;
+    while (placed < mineTotal) {
+      const r = Math.floor(Math.random() * mineRows);
+      const c = Math.floor(Math.random() * mineCols);
+      const idx = r * mineCols + c;
+      if (mineBoard[r][c].mine || safeCells.has(idx)) continue;
+      mineBoard[r][c].mine = true;
+      placed++;
+    }
+
+    // Считаем соседние мины
+    for (let r = 0; r < mineRows; r++) {
+      for (let c = 0; c < mineCols; c++) {
+        if (mineBoard[r][c].mine) continue;
+        let count = 0;
+        for (let dr = -1; dr <= 1; dr++) {
+          for (let dc = -1; dc <= 1; dc++) {
+            if (dr === 0 && dc === 0) continue;
+            const nr = r + dr, nc = c + dc;
+            if (nr >= 0 && nr < mineRows && nc >= 0 && nc < mineCols && mineBoard[nr][nc].mine) count++;
+          }
+        }
+        mineBoard[r][c].adjacent = count;
+      }
+    }
+  }
+
+  function renderMineGrid() {
+    mineGrid.innerHTML = '';
+    mineGrid.style.gridTemplateColumns = `repeat(${mineCols}, 1fr)`;
+
+    for (let r = 0; r < mineRows; r++) {
+      for (let c = 0; c < mineCols; c++) {
+        const cell = document.createElement('div');
+        cell.className = 'mine-cell';
+        cell.dataset.r = r;
+        cell.dataset.c = c;
+
+        cell.addEventListener('click', () => handleMineClick(r, c));
+        cell.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
+          handleMineRightClick(r, c);
+        });
+
+        mineGrid.appendChild(cell);
+      }
+    }
+  }
+
+  function getMineCellEl(r, c) {
+    return mineGrid.children[r * mineCols + c];
+  }
+
+  function startMineTimer() {
+    if (mineTimerInterval) return;
+    mineTimerInterval = setInterval(() => {
+      mineTime++;
+      if (mineTime > 999) mineTime = 999;
+      mineTimeEl.textContent = String(mineTime).padStart(3, '0');
+    }, 1000);
+  }
+
+  function handleMineClick(r, c) {
+    if (mineState === 'won' || mineState === 'lost') return;
+    const cell = mineBoard[r][c];
+    if (cell.flagged || cell.revealed) return;
+
+    if (mineFirstClick) {
+      mineFirstClick = false;
+      placeMines(r, c);
+      startMineTimer();
+      mineState = 'playing';
+      mineStatusEl.textContent = 'ОСТОРОЖНО С МИНАМИ!';
+    }
+
+    if (cell.mine) {
+      // Поражение
+      cell.revealed = true;
+      mineState = 'lost';
+      clearInterval(mineTimerInterval);
+      mineTimerInterval = null;
+      revealAllMines(r, c);
+      mineStatusEl.textContent = '💥 БУМ! ТЫ ПОДОРВАЛСЯ';
+      mineStatusEl.className = 'mine-status lose';
+      return;
+    }
+
+    revealCell(r, c);
+    checkMineWin();
+  }
+
+  function handleMineRightClick(r, c) {
+    if (mineState === 'won' || mineState === 'lost') return;
+    if (mineFirstClick) return; // Нельзя ставить флажок до первого хода
+    const cell = mineBoard[r][c];
+    if (cell.revealed) return;
+
+    cell.flagged = !cell.flagged;
+    const el = getMineCellEl(r, c);
+    if (cell.flagged) {
+      el.classList.add('flagged');
+      el.textContent = '🚩';
+      mineFlagsCount++;
+    } else {
+      el.classList.remove('flagged');
+      el.textContent = '';
+      mineFlagsCount--;
+    }
+    mineFlagsEl.textContent = mineTotal - mineFlagsCount;
+  }
+
+  function revealCell(r, c) {
+    if (r < 0 || r >= mineRows || c < 0 || c >= mineCols) return;
+    const cell = mineBoard[r][c];
+    if (cell.revealed || cell.flagged || cell.mine) return;
+
+    cell.revealed = true;
+    mineRevealedCount++;
+    const el = getMineCellEl(r, c);
+    el.classList.add('revealed');
+
+    if (cell.adjacent > 0) {
+      el.textContent = cell.adjacent;
+      el.classList.add('n' + cell.adjacent);
+    } else {
+      // Пустая клетка — открываем соседей
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          if (dr === 0 && dc === 0) continue;
+          revealCell(r + dr, c + dc);
+        }
+      }
+    }
+  }
+
+  function revealAllMines(explodedR, explodedC) {
+    for (let r = 0; r < mineRows; r++) {
+      for (let c = 0; c < mineCols; c++) {
+        const cell = mineBoard[r][c];
+        const el = getMineCellEl(r, c);
+        if (cell.mine) {
+          if (r === explodedR && c === explodedC) {
+            el.classList.add('mine-exploded');
+            el.textContent = '💥';
+          } else if (!cell.flagged) {
+            el.classList.add('revealed', 'mine-shown');
+            el.textContent = '💣';
+          }
+        } else if (cell.flagged) {
+          // Неправильный флажок
+          el.textContent = '❌';
+          el.style.color = '#ff3860';
+        }
+      }
+    }
+  }
+
+  function checkMineWin() {
+    const totalSafe = mineRows * mineCols - mineTotal;
+    if (mineRevealedCount === totalSafe) {
+      mineState = 'won';
+      clearInterval(mineTimerInterval);
+      mineTimerInterval = null;
+
+      // Автоматически ставим флажки на оставшиеся мины
+      for (let r = 0; r < mineRows; r++) {
+        for (let c = 0; c < mineCols; c++) {
+          const cell = mineBoard[r][c];
+          const el = getMineCellEl(r, c);
+          if (cell.mine && !cell.flagged) {
+            cell.flagged = true;
+            el.classList.add('flagged', 'win-reveal');
+            el.textContent = '🚩';
+          } else if (cell.mine) {
+            el.classList.add('win-reveal');
+          }
+        }
+      }
+      mineFlagsEl.textContent = '0';
+      mineStatusEl.innerHTML = `🏆 ПОБЕДА! ВРЕМЯ: ${String(mineTime).padStart(3, '0')}с`;
+      mineStatusEl.className = 'mine-status win';
+    }
+  }
+
+  // Кнопка сброса
+  document.getElementById('mine-reset').addEventListener('click', buildMineBoard);
+
+  // Переключатели сложности
+  document.querySelectorAll('.mine-diff-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mine-diff-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const diff = MINE_DIFFS[btn.dataset.diff];
+      mineRows = diff.rows;
+      mineCols = diff.cols;
+      mineTotal = diff.mines;
+      buildMineBoard();
+    });
+  });
+</script>
+</body>
+</html>
+
